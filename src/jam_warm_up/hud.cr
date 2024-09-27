@@ -4,12 +4,12 @@ module JamWarmUp
   class HUD
     getter text
 
-    Margin = 10
-
+    Margin = 16
+    FontSize = 24
     TextColor = SF::Color::Green
 
     def initialize
-      @text = SF::Text.new("", Font.default, 24)
+      @text = SF::Text.new("player health: 100", Font.default, FontSize)
       @text.fill_color = TextColor
       @text.position = {Margin, Margin}
     end

@@ -2,33 +2,21 @@ module JamWarmUp
   class Player
     getter x : Int32 | Float32
     getter y : Int32 | Float32
-    getter animations
+    getter sprite : SF::Sprite
 
-    AnimationFPS = 8
     Size = 128
     Speed = 640
-    Sheet = "./assets/player.png"
+    SpriteFile = "./assets/player.png"
 
     def initialize(x = 0, y = 0)
-      # sprite size
       @x = x
       @y = y
 
-      # init animations
-      # idle
-      idle = GSF::Animation.new(AnimationFPS, loops: false)
-      idle.add(Sheet, 0, 0, size, size)
+      texture = SF::Texture.from_file(SpriteFile, SF::IntRect.new(0, 0, size, size))
+      texture.smooth = true
 
-      # fire animation
-      fire_frames = 3
-      fire = GSF::Animation.new(AnimationFPS, loops: false)
-
-      fire_frames.times do |i|
-        fire.add(Sheet, i * size, 0, size, size)
-      end
-
-      @animations = GSF::Animations.new(:idle, idle)
-      animations.add(:fire, fire)
+      @sprite = SF::Sprite.new(texture)
+      sprite.position = {x, y}
     end
 
     def size
@@ -36,8 +24,6 @@ module JamWarmUp
     end
 
     def update(frame_time, keys : Keys)
-      animations.update(frame_time)
-
       update_movement(frame_time, keys)
     end
 
@@ -80,10 +66,12 @@ module JamWarmUp
     def move(dx, dy)
       @x += dx
       @y += dy
+
+      sprite.position = {x, y}
     end
 
     def draw(window : SF::RenderWindow)
-      animations.draw(window, x, y)
+      window.draw(sprite)
     end
   end
 end
