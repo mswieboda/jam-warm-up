@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DIR=`dirname "$0"`
-NAME=game_sf_template
+NAME=jam_warm_up
 LIB=/usr/local/lib
 FRAMEWORKS=/Library/Frameworks
 

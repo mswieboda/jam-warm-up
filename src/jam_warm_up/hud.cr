@@ -1,6 +1,6 @@
 require "./font"
 
-module GameSFTemplate
+module JamWarmUp
   class HUD
     getter text
 

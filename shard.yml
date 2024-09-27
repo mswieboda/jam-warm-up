@@ -1,12 +1,12 @@
-name: game_sf_template
+name: jam_warm_up
 version: 0.1.7
 
 authors:
   - Matt Swieboda <mswieboda@users.noreply.github.com>
 
 targets:
-  game_sf_template:
-    main: src/game_sf_template.cr
+  jam_warm_up:
+    main: src/jam_warm_up.cr
 
 development_dependencies:
   ameba:

@@ -1,6 +1,6 @@
 require "./stage"
 
-module GameSFTemplate
+module JamWarmUp
   class Game < GSF::Game
     getter manager
 
@@ -15,7 +15,7 @@ module GameSFTemplate
         style = SF::Style::Default
       {% end %}
 
-      super(title: "Game SF Template", mode: mode, style: style)
+      super(title: "Jam Warm Up", mode: mode, style: style)
 
       @stage = Stage.new
     end
