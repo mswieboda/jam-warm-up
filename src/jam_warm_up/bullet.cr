@@ -14,6 +14,7 @@ module JamWarmUp
     Height = 12
     Speed = 1920
     Color = SF::Color::Red
+    Damage = 25
 
     def initialize(@x = 0, @y = 0)
       @circle = SF::CircleShape.new(radius)
@@ -47,6 +48,10 @@ module JamWarmUp
 
     def speed
       Speed
+    end
+
+    def damage
+      Damage
     end
 
     def die
