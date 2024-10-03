@@ -1,38 +1,25 @@
 require "./bullet"
+require "./ship"
 
 module JamWarmUp
-  class Player
-    getter x : Int32 | Float32
-    getter y : Int32 | Float32
-    getter sprite : SF::Sprite
+  class Player < Ship
     getter bullets : Array(Bullet)
     getter fire_timer : Timer
 
-    Size = 128
     Speed = 640
     SpriteFile = "./assets/player.png"
     FireDuration = 125.milliseconds
 
     def initialize(x = 0, y = 0)
-      @x = x
-      @y = y
-
-      texture = SF::Texture.from_file(SpriteFile, SF::IntRect.new(0, 0, size, size))
-      texture.smooth = true
-
-      @sprite = SF::Sprite.new(texture)
-      sprite.origin = {size / 2, size / 2}
-      sprite.position = {x, y}
+      super(x, y)
 
       @bullets = [] of Bullet
       @fire_timer = Timer.new(FireDuration)
     end
 
-    def size
-      Size
-    end
-
     def update(frame_time, keys : Keys)
+      super(frame_time)
+
       update_movement(frame_time, keys)
       update_firing(keys)
 
@@ -76,13 +63,6 @@ module JamWarmUp
       {dx, dy}
     end
 
-    def move(dx, dy)
-      @x += dx
-      @y += dy
-
-      sprite.position = {x, y}
-    end
-
     def update_firing(keys)
       if fire_timer.done?
         fire_bullet if keys.pressed?(Keys::Space)
@@ -101,9 +81,9 @@ module JamWarmUp
     end
 
     def draw(window : SF::RenderWindow)
-      window.draw(sprite)
-
       bullets.each(&.draw(window))
+
+      super(window)
     end
   end
 end
