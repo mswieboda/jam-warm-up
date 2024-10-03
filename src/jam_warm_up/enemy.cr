@@ -7,11 +7,12 @@ module JamWarmUp
     getter flash_timer : Timer
 
     Color = SF::Color.new(255, 128, 255)
-    Speed = -128
+    Speed = -256
     MaxHealth = 100
     FlashDuration = 25.milliseconds
     FlashTimes = 3
     FlashColor = SF::Color.new(255, 64, 64)
+    Score = 100
 
     def initialize(x = 0, y = 0)
       super(
@@ -26,7 +27,11 @@ module JamWarmUp
       @health = MaxHealth
     end
 
-    def update(frame_time, bullets : Array(Bullet))
+    def score
+      Score
+    end
+
+    def update(frame_time)
       super(frame_time)
 
       # TODO: add conditions to stop
@@ -41,17 +46,6 @@ module JamWarmUp
 
         @flash_index += 1
         flash_timer.restart
-      end
-
-      check_bullets(bullets)
-    end
-
-    def check_bullets(bullets)
-      bullets.each do |bullet|
-        if collision_box.collides?(x, y, bullet.collision_box, bullet.x, bullet.y)
-          take_damage(bullet.damage)
-          bullet.die
-        end
       end
     end
 

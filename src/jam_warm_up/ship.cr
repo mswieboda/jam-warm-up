@@ -29,8 +29,12 @@ module JamWarmUp
       @dead = false
     end
 
-    def size
+    def self.size
       Size
+    end
+
+    def size
+      self.class.size
     end
 
     def die
