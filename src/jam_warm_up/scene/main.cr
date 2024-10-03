@@ -20,7 +20,7 @@ module JamWarmUp::Scene
       end
 
       player.update(frame_time, keys)
-      hud.update(frame_time)
+      hud.update(frame_time, player)
     end
 
     def draw(window)

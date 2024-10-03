@@ -9,12 +9,13 @@ module JamWarmUp
     TextColor = SF::Color::Green
 
     def initialize
-      @text = SF::Text.new("player health: 100", Font.default, FontSize)
+      @text = SF::Text.new("player bullets: 0", Font.default, FontSize)
       @text.fill_color = TextColor
       @text.position = {Margin, Margin}
     end
 
-    def update(frame_time)
+    def update(frame_time, player)
+      @text.string = "player bullets: #{player.bullets.size}"
     end
 
     def draw(window : SF::RenderWindow)

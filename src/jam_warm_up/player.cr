@@ -34,6 +34,7 @@ module JamWarmUp
       update_firing(keys)
 
       bullets.each(&.update(frame_time))
+      remove_dead_bullets
     end
 
     def update_movement(frame_time, keys : Keys)
@@ -80,13 +81,15 @@ module JamWarmUp
     end
 
     def update_firing(keys)
-      if keys.just_pressed?(Keys::Space)
-        fire_bullet
-      end
+      fire_bullet if keys.just_pressed?(Keys::Space)
     end
 
     def fire_bullet
       @bullets << Bullet.new(x, y)
+    end
+
+    def remove_dead_bullets
+      @bullets.reject!(&.dead?)
     end
 
     def draw(window : SF::RenderWindow)
