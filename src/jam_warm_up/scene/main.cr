@@ -29,8 +29,13 @@ module JamWarmUp::Scene
       end
 
       player.update(frame_time, keys)
-      enemies.each(&.update(frame_time))
+      enemies.each(&.update(frame_time, player.bullets))
+      remove_dead_enemies
       hud.update(frame_time, player)
+    end
+
+    def remove_dead_enemies
+      @enemies.reject!(&.dead?)
     end
 
     def draw(window)

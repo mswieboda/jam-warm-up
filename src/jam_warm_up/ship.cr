@@ -1,8 +1,11 @@
+require "./collision_box"
+
 module JamWarmUp
   class Ship
     getter x : Int32 | Float32
     getter y : Int32 | Float32
     getter sprite : SF::Sprite
+    getter collision_box : CollisionBox
     getter? dead
 
     Size = 128
@@ -20,6 +23,8 @@ module JamWarmUp
       sprite.position = {x, y}
       sprite.color = color
       sprite.scale = {-1, 1} if flip_horizontal
+
+      @collision_box = CollisionBox.new(size, size)
 
       @dead = false
     end
