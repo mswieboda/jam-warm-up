@@ -1,8 +1,11 @@
+require "./bullet"
+
 module JamWarmUp
   class Player
     getter x : Int32 | Float32
     getter y : Int32 | Float32
     getter sprite : SF::Sprite
+    getter bullets : Array(Bullet)
 
     Size = 128
     Speed = 640
@@ -16,7 +19,10 @@ module JamWarmUp
       texture.smooth = true
 
       @sprite = SF::Sprite.new(texture)
+      sprite.origin = {size / 2, size / 2}
       sprite.position = {x, y}
+
+      @bullets = [] of Bullet
     end
 
     def size
@@ -25,16 +31,19 @@ module JamWarmUp
 
     def update(frame_time, keys : Keys)
       update_movement(frame_time, keys)
+      update_firing(keys)
+
+      bullets.each(&.update(frame_time))
     end
 
     def update_movement(frame_time, keys : Keys)
       dx = 0
       dy = 0
 
-      dy -= 1 if keys.pressed?([Keys::W])
-      dx -= 1 if keys.pressed?([Keys::A])
-      dy += 1 if keys.pressed?([Keys::S])
-      dx += 1 if keys.pressed?([Keys::D])
+      dy -= 1 if keys.pressed?(Keys::W)
+      dx -= 1 if keys.pressed?(Keys::A)
+      dy += 1 if keys.pressed?(Keys::S)
+      dx += 1 if keys.pressed?(Keys::D)
 
       return if dx == 0 && dy == 0
 
@@ -70,8 +79,20 @@ module JamWarmUp
       sprite.position = {x, y}
     end
 
+    def update_firing(keys)
+      if keys.just_pressed?(Keys::Space)
+        fire_bullet
+      end
+    end
+
+    def fire_bullet
+      @bullets << Bullet.new(x, y)
+    end
+
     def draw(window : SF::RenderWindow)
       window.draw(sprite)
+
+      bullets.each(&.draw(window))
     end
   end
 end
