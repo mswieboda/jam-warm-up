@@ -2,18 +2,37 @@
 
 ## Installation
 
+## Windows
+
+if compiling/installing from Windows, please first run:
+
+```
+win_shards_install.bat
+```
+
+to install shards and clone crsfml v2.5.3 and compile it for windows directly
+
+then run:
+
+```
+win_shards_postinstall.bat
+```
+
+to copy the specific Window crsfml v2.5.3 compiled files to this `lib/crsfml`
+
+
+## Mac or Linux
+
 [install SFML](https://github.com/oprypin/crsfml#install-sfml)
 
 ```
 shards install
 ```
 
-### Windows
-
-if compiling/installing from Windows, please follow [`game_sf`](https://github.com/mswieboda/game_sf) windows instructions
-
 
 ### Linter
+
+(won't work on Windows as we used `shards install --skip-postinstall` so it won't get the binary)
 
 ```
 bin/ameba
