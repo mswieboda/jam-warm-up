@@ -4,7 +4,7 @@
 
 ## Windows
 
-if compiling/installing from Windows, please first run:
+if compiling/installing from Windows, in an `x64 Native Tools Command Prompt for VS 2019` command line (see [https://github.com/mswieboda/game_sf?tab=readme-ov-file#installation](game_sf) Windows Installation instructions) please first run:
 
 ```
 win_shards_install.bat
@@ -19,7 +19,6 @@ win_shards_postinstall.bat
 ```
 
 to copy the specific Window crsfml v2.5.3 compiled files to this `lib/crsfml`
-
 
 ## Mac or Linux
 
