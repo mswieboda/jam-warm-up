@@ -28,9 +28,11 @@ module JamWarmUp::Scene
 
       player.update(frame_time, keys)
       enemies.each(&.update(frame_time))
+
       check_bullets(player.bullets)
       remove_dead_enemies
       spawn_enemies
+
       hud.update(frame_time, score)
     end
 
@@ -38,14 +40,18 @@ module JamWarmUp::Scene
       bullets.each do |bullet|
         enemies.each do |enemy|
           if enemy.collision_box.collides?(enemy.x, enemy.y, bullet.collision_box, bullet.x, bullet.y)
-            enemy.take_damage(bullet.damage)
-            bullet.die
-
-            if enemy.dead?
-              @score += enemy.score
-            end
+            enemy_hit(bullet, enemy)
           end
         end
+      end
+    end
+
+    def enemy_hit(bullet, enemy)
+      enemy.take_damage(bullet.damage)
+      bullet.die
+
+      if enemy.dead?
+        @score += enemy.score
       end
     end
 
