@@ -6,10 +6,12 @@ module JamWarmUp
     getter y : Int32 | Float32
     getter sprite : SF::Sprite
     getter bullets : Array(Bullet)
+    getter fire_timer : Timer
 
     Size = 128
     Speed = 640
     SpriteFile = "./assets/player.png"
+    FireDuration = 125.milliseconds
 
     def initialize(x = 0, y = 0)
       @x = x
@@ -23,6 +25,7 @@ module JamWarmUp
       sprite.position = {x, y}
 
       @bullets = [] of Bullet
+      @fire_timer = Timer.new(FireDuration)
     end
 
     def size
@@ -81,11 +84,16 @@ module JamWarmUp
     end
 
     def update_firing(keys)
-      fire_bullet if keys.just_pressed?(Keys::Space)
+      if fire_timer.done?
+        fire_bullet if keys.pressed?(Keys::Space)
+      elsif !fire_timer.started?
+        fire_timer.start
+      end
     end
 
     def fire_bullet
       @bullets << Bullet.new(x, y)
+      fire_timer.restart
     end
 
     def remove_dead_bullets
