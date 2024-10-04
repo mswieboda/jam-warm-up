@@ -1,11 +1,11 @@
-NAME=jam_warm_up
+NAME=game_sf_template
 SHELL = /bin/sh
 OPTS = CRYSTAL_OPTS="--link-flags=-Wl,-ld_classic"
 CC = ${OPTS} crystal build
 BUILD_DIR = build
 OUT_FILE = ${BUILD_DIR}/${NAME}
 SOURCE_FILES = src/${NAME}.cr
-SFML_DLL_DIR = D:\\Program Files\\SFML-2.5.1\\bin
+SFML_DLL_DIR = "D:/Program Files/SFML-2.5.1/bin"
 SFML_MAC_DIR = /Users/matt/code/libs/SFML-2.5.1-macos-clang
 
 build_and_test: clean test
@@ -21,21 +21,19 @@ test: build_test
 	./${OUT_FILE}_test.o
 
 ${OUT_FILE}.o:
-	${CC} ${SOURCE_FILES} -o ${OUT_FILE}.o --release --no-debug
+	${CC} ${SOURCE_FILES} -o ${OUT_FILE}.o --release --no-debug -p
+
+${OUT_FILE}.exe:
+	${CC} ${SOURCE_FILES} -o ${OUT_FILE}.exe --release --no-debug -p
 
 release: clean ${OUT_FILE}.o
 	./${OUT_FILE}.o
 
-winpack: clean ${OUT_FILE}.o
-ifeq ($(OS),Windows_NT)
-	copy ${NAME}.exe ${BUILD_DIR}
-	rename ${BUILD_DIR}\\${NAME}.o main.o
-	copy "${SFML_DLL_DIR}\\*.dll" ${BUILD_DIR}
-	xcopy /E assets ${BUILD_DIR}\\assets\\
-	rename ${BUILD_DIR} ${NAME}
-	7z a -tzip -mx9 ${NAME}\\${NAME}-win.zip ${NAME}\\*
-	rename ${NAME} ${BUILD_DIR}
-endif
+winpack: clean ${OUT_FILE}.exe
+	cp ${SFML_DLL_DIR}/*.dll ${BUILD_DIR}
+	cp -r assets ${BUILD_DIR}/assets
+	cd ${BUILD_DIR} && 7z a -tzip -mx9 ${NAME}-win.zip .
+	cd ..
 
 macpack: clean ${OUT_FILE}.o
 	mkdir ${BUILD_DIR}/sfml
