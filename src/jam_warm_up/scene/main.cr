@@ -1,6 +1,7 @@
 require "../enemy"
 require "../hud"
 require "../player"
+require "../nom"
 
 module JamWarmUp::Scene
   class Main < GSF::Scene
@@ -8,6 +9,7 @@ module JamWarmUp::Scene
     getter player : Player
     getter enemies : Array(Enemy)
     getter score : Int32
+    getter nom : Nom
 
     EnemyWaveSize = 3
 
@@ -18,6 +20,7 @@ module JamWarmUp::Scene
       @player = Player.new(x: 300, y: 300)
       @enemies = [] of Enemy
       @score = 0
+      @nom = Nom.new(rand(Screen.width), rand(Screen.height))
     end
 
     def update(frame_time, keys : Keys, mouse : Mouse, joysticks : Joysticks)
@@ -42,6 +45,10 @@ module JamWarmUp::Scene
           if enemy.collision_box.collides?(enemy.x, enemy.y, bullet.collision_box, bullet.x, bullet.y)
             enemy_hit(bullet, enemy)
           end
+        end
+
+        if nom.collision_box.collides?(nom.x, nom.y, bullet.collision_box, bullet.x, bullet.y)
+          bullet.die
         end
       end
     end
@@ -74,9 +81,9 @@ module JamWarmUp::Scene
     end
 
     def draw(window)
+      nom.draw(window)
       enemies.each(&.draw(window))
       player.draw(window)
-
       hud.draw(window)
     end
   end

@@ -26,6 +26,7 @@ module JamWarmUp
 
     def draw(window : SF::RenderWindow, x, y)
       rectangle = SF::RectangleShape.new({width, height})
+      rectangle.origin = {width / 2, height / 2}
       rectangle.position = {x, y}
       rectangle.fill_color = SF::Color::Transparent
       rectangle.outline_color = SF::Color::Magenta
