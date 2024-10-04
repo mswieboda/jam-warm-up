@@ -1,4 +1,4 @@
-NAME=game_sf_template
+NAME=jam_warm_up
 SHELL = /bin/sh
 OPTS = CRYSTAL_OPTS="--link-flags=-Wl,-ld_classic"
 CC = ${OPTS} crystal build
