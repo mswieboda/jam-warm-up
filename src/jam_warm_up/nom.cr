@@ -3,7 +3,7 @@ module JamWarmUp
 
     getter x : Int32 | Float32
     getter y : Int32 | Float32
-    getter sprite : SF::Sprite
+    getter animations : GSF::Animations
     getter collision_box : CollisionBox
     getter? dead
 
@@ -17,16 +17,22 @@ module JamWarmUp
 
       @collision_box = CollisionBox.new(Size, Size)
 
-      texture = SF::Texture.from_file(SpriteFile, SF::IntRect.new(0, 0, SpriteSize, SpriteSize))
+      default = GSF::Animation.new(30)
 
-      @sprite = SF::Sprite.new(texture)
-      sprite.origin = {SpriteSize / 2, SpriteSize / 2}
-      sprite.position = {x, y}
-      sprite.scale = {Scale, Scale}
+      frames = 2
+      frames.times do |index|
+        default.add(SpriteFile, SpriteSize * index, 0 , SpriteSize, SpriteSize)
+      end
+
+      @animations = GSF::Animations.new(:default, default)
+    end
+
+    def update(frame_time)
+      animations.update(frame_time)
     end
 
     def draw(window : SF::RenderWindow)
-      window.draw(sprite)
+      animations.draw(window, x, y)
       collision_box.draw(window, x, y)
     end
   end

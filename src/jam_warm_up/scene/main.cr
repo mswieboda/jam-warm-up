@@ -31,6 +31,7 @@ module JamWarmUp::Scene
 
       player.update(frame_time, keys)
       enemies.each(&.update(frame_time))
+      nom.update(frame_time)
 
       check_bullets(player.bullets)
       remove_dead_enemies
