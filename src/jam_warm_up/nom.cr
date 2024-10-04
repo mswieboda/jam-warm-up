@@ -17,11 +17,11 @@ module JamWarmUp
 
       @collision_box = CollisionBox.new(Size, Size)
 
-      default = GSF::Animation.new(30)
+      default = GSF::Animation.new
 
       frames = 2
       frames.times do |index|
-        default.add(SpriteFile, SpriteSize * index, 0 , SpriteSize, SpriteSize)
+        default.add(SpriteFile, x: SpriteSize * index, y: 0, width: SpriteSize, height: SpriteSize, duration_ms: 250)
       end
 
       @animations = GSF::Animations.new(:default, default)
