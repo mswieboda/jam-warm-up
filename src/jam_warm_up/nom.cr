@@ -21,7 +21,7 @@ module JamWarmUp
 
       frames = 2
       frames.times do |index|
-        default.add(SpriteFile, x: SpriteSize * index, y: 0, width: SpriteSize, height: SpriteSize, duration_ms: 250)
+        default.add(SpriteFile, x: SpriteSize * index, y: 0, width: SpriteSize, height: SpriteSize, duration_ms: 250, scale: {Scale, Scale})
       end
 
       @animations = GSF::Animations.new(:default, default)
